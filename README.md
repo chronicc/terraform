@@ -1,4 +1,4 @@
 Terraform
 =========
 
-Terraform modules for testing and provisioning my infrastructure.
+Collection of productive and experimental terraform modules.
