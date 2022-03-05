@@ -6,9 +6,9 @@ variable "kubectl_context" {
 }
 
 variable "kubectl_config_path" {
-  default     = "~/.kube/config"
   description = "Path to the config file which will be used by kubectl"
   type        = string
+  default     = "~/.kube/config"
 }
 
 
@@ -44,5 +44,10 @@ variable "cert_manager_helm_repository" {
 
 variable "cert_manager_helm_version" {
   description = "Version of the helm chart"
+  type        = string
+}
+
+variable "cert_manager_issuer_email" {
+  description = "Email which is used to issue certificates"
   type        = string
 }
