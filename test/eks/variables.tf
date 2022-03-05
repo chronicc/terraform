@@ -1,7 +1,7 @@
 variable "name" {
-  default = "eks"
   description = "Name of the cluster which is used for all resourcs related to EKS."
   type = string
+  default = "eks"
 }
 
 resource "random_string" "eks" {
@@ -10,17 +10,11 @@ resource "random_string" "eks" {
 }
 
 variable "profile" {
-  default     = ""
-  description = "AWS cli profile"
+  description = "AWS profile"
   type        = string
 }
 
 variable "region" {
-  default     = ""
   description = "AWS region"
   type        = string
-}
-
-locals {
-  cluster_name = "${var.name}-${random_string.eks.result}"
 }
