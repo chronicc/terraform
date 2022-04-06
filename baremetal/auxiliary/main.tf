@@ -21,7 +21,7 @@ resource "helm_release" "ingress_controller" {
   version    = var.ingress_controller_helm_version
 
   values = [
-    file("helm-values/ingresscontroller.yml")
+    file("helm-values/ingress_controller.yml")
   ]
 
   depends_on = [
@@ -108,4 +108,21 @@ resource "kubectl_manifest" "cluster_issuer_letsencrypt_prod" {
   depends_on = [
     helm_release.cert_manager
   ]
+}
+
+
+## Storage Class
+##
+resource "kubernetes_storage_class" "local" {
+  metadata {
+    annotations = {
+      "storageclass.kubernetes.io/is-default-class" = true
+    }
+    name = "local"
+  }
+
+  allow_volume_expansion = true
+  reclaim_policy         = "Delete"
+  storage_provisioner    = "kubernetes.io/no-provisioner"
+  volume_binding_mode    = "WaitForFirstConsumer"
 }
