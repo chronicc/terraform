@@ -153,7 +153,7 @@ resource "kubectl_manifest" "cert_example_ingress" {
 
 ## Gitlab Runner
 ##
-module "gitlab-runner" {
+module "gitlab_runner" {
   source    = "./modules/gitlab-runner"
   name      = "gitlab-runner"
   namespace = "gitlab-runner"

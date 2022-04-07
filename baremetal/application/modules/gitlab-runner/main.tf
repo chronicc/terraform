@@ -19,8 +19,8 @@ resource "kubernetes_secret" "this" {
   }
 
   data = {
-    username = var.s3_cache_access_key
-    password = var.s3_cache_secret_key
+    accesskey = var.s3_cache_access_key
+    secretkey = var.s3_cache_secret_key
   }
 
   type = "kubernetes.io/generic"

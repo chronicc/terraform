@@ -8,7 +8,7 @@ runners:
       [runners.kubernetes]
         image = "ubuntu:16.04"
         [runners.cache]
-          %{ if s3_cache_enabled ~}
+          %{~ if s3_cache_enabled ~}
           Type = "s3"
           Path = "runner"
           Shared = true
@@ -16,11 +16,11 @@ runners:
             ServerAddress = "${s3_cache_address}"
             BucketName = "${s3_cache_bucket_name}"
             BucketLocation = "${s3_cache_region}"
-            Insecure = false
+            Insecure = true
             AuthenticationType = "access-key"
-          %{ endif ~}
+          %{~ endif ~}
 
-  %{ if s3_cache_enabled }
+  %{~ if s3_cache_enabled ~}
   cache:
     secretName: ${s3_cache_secret_name}
-  %{ endif ~}
+  %{~ endif ~}
