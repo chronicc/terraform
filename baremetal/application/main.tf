@@ -149,3 +149,41 @@ resource "kubectl_manifest" "cert_example_ingress" {
                   number: 80
     YAML
 }
+
+
+## Gitlab Runner
+##
+module "gitlab-runner" {
+  source    = "./modules/gitlab-runner"
+  name      = "gitlab-runner"
+  namespace = "gitlab-runner"
+
+  gitlab_url           = var.gitlab_runner_gitlab_url
+  helm_chart           = var.gitlab_runner_helm_chart
+  helm_repository      = var.gitlab_runner_helm_repository
+  helm_version         = var.gitlab_runner_helm_version
+  runner_token         = var.gitlab_runner_token
+  s3_cache_access_key  = var.gitlab_runner_s3_cache_access_key
+  s3_cache_address     = var.gitlab_runner_s3_cache_address
+  s3_cache_bucket_name = var.gitlab_runner_s3_cache_bucket_name
+  s3_cache_enabled     = var.gitlab_runner_s3_cache_enabled
+  s3_cache_region      = var.gitlab_runner_s3_cache_region
+  s3_cache_secret_key  = var.gitlab_runner_s3_cache_secret_key
+}
+
+
+## Minio
+##
+module "minio" {
+  source    = "./modules/minio"
+  name      = "minio"
+  namespace = "minio"
+
+  helm_chart      = var.minio_helm_chart
+  helm_repository = var.minio_helm_repository
+  helm_version    = var.minio_helm_version
+  ingress_host    = var.minio_ingress_host
+  root_password   = var.minio_root_password
+  storage_size    = var.minio_storage_size
+  storage_volume  = var.minio_storage_volume
+}

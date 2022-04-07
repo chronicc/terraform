@@ -1,0 +1,26 @@
+gitlabUrl: "${gitlab_url}"
+rbac:
+  create: true
+runnerRegistrationToken: "${runner_token}"
+runners:
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        image = "ubuntu:16.04"
+        [runners.cache]
+          %{ if s3_cache_enabled ~}
+          Type = "s3"
+          Path = "runner"
+          Shared = true
+          [runners.cache.s3]
+            ServerAddress = "${s3_cache_address}"
+            BucketName = "${s3_cache_bucket_name}"
+            BucketLocation = "${s3_cache_region}"
+            Insecure = false
+            AuthenticationType = "access-key"
+          %{ endif ~}
+
+  %{ if s3_cache_enabled }
+  cache:
+    secretName: ${s3_cache_secret_name}
+  %{ endif ~}

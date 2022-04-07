@@ -119,10 +119,56 @@ resource "kubernetes_storage_class" "local" {
       "storageclass.kubernetes.io/is-default-class" = true
     }
     name = "local"
+    labels = {
+      "managed_by" = "terraform"
+    }
   }
 
   allow_volume_expansion = true
-  reclaim_policy         = "Delete"
   storage_provisioner    = "kubernetes.io/no-provisioner"
-  volume_binding_mode    = "WaitForFirstConsumer"
+  volume_binding_mode    = "Immediate"
+}
+
+
+## Persistent Volumes
+resource "kubernetes_persistent_volume" "local" {
+  for_each = {
+    "1" = "100Gi"
+  }
+
+  metadata {
+    name = "local-pv${each.key}"
+  }
+
+  spec {
+    access_modes                     = ["ReadWriteOnce"]
+    persistent_volume_reclaim_policy = "Retain"
+    storage_class_name               = kubernetes_storage_class.local.metadata[0].name
+
+    capacity = {
+      storage = each.value
+    }
+
+    node_affinity {
+      required {
+        node_selector_term {
+          match_expressions {
+            key      = "kubernetes.io/hostname"
+            operator = "In"
+            values   = var.storage_local_volume_nodes
+          }
+        }
+      }
+    }
+
+    persistent_volume_source {
+      local {
+        path = "/mnt/volumes/pv${each.key}"
+      }
+    }
+  }
+
+  depends_on = [
+    kubernetes_storage_class.local
+  ]
 }

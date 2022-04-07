@@ -1,0 +1,18 @@
+auth:
+  rootPassword: ${root_password}
+ingress:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.class: "contour"
+    kubernetes.io/tls-acme: "true"
+  enabled: true
+  hostname: ${ingress_host}
+  tls: true
+persistence:
+  %{ if storage_claim != "" ~}
+  existingClaim: ${storage_claim}
+  %{ endif ~}
+  size: ${storage_size}
+rootPassword: ${root_password}
+rootUser: admin

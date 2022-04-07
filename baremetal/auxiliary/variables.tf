@@ -51,3 +51,11 @@ variable "cert_manager_issuer_email" {
   description = "Email which is used to issue certificates"
   type        = string
 }
+
+
+## Storage Configuration
+##
+variable "storage_local_volume_nodes" {
+  description = "List of nodes providing local persistent volumes"
+  type        = list(string)
+}
