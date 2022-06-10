@@ -133,7 +133,8 @@ resource "kubernetes_storage_class" "local" {
 ## Persistent Volumes
 resource "kubernetes_persistent_volume" "local" {
   for_each = {
-    "1" = "100Gi"
+    "1" = "100Gi"   # minio
+    "2" = "8Gi"     # backstage
   }
 
   metadata {
