@@ -154,7 +154,8 @@ resource "kubectl_manifest" "cert_example_ingress" {
 ## Gitlab Runner
 ##
 module "gitlab_runner" {
-  source    = "./modules/gitlab-runner"
+  source = "../../modules/helm-gitlab-runner"
+
   name      = "gitlab-runner"
   namespace = "gitlab-runner"
 
@@ -174,7 +175,7 @@ module "gitlab_runner" {
 
 ## Grafana
 ##
-module "helm_grafana" {
+module "grafana" {
   source = "../../modules/helm-grafana"
 
   ingress_domain           = var.grafana_ingress_domain
@@ -198,7 +199,8 @@ resource "kubernetes_config_map" "grafana_dashboards" {
 ## Minio
 ##
 module "minio" {
-  source    = "./modules/minio"
+  source = "../../modules/helm-minio"
+
   name      = "minio"
   namespace = "minio"
 
@@ -214,7 +216,7 @@ module "minio" {
 
 ## Prometheus
 ##
-module "helm_prometheus" {
+module "prometheus" {
   source = "../../modules/helm-prometheus"
 
   alertmanager_persistence_storage_size = "8Gi"
