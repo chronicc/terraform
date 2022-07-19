@@ -1,0 +1,42 @@
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-server
+      access: proxy
+      isDefault: true
+
+grafana.ini:
+  server:
+    domain: ${domain}
+    root_url: "https://${domain}/"
+    serve_from_sub_path: false
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.class: contour
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - "${domain}"
+  tls:
+    - secretName: cert-grafana-tls
+      hosts:
+        - "${domain}"
+
+persistence:
+  type: pvc
+  enabled: ${ persistence_enabled }
+  storageClassName: ${ persistence_storage_class_name }
+  accessModes:
+    - ReadWriteOnce
+  size: ${ persistence_storage_size }
+
+sidecar:
+  dashboards:
+    enabled: true
+    label: grafana_dashboard

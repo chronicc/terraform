@@ -82,6 +82,15 @@ variable "gitlab_runner_s3_cache_secret_key" {
   type        = string
 }
 
+
+## Grafana
+##
+variable "grafana_ingress_domain" {
+  description = "DNS domain used for the ingress route."
+  type        = string
+}
+
+
 ## Minio
 ##
 variable "minio_helm_chart" {

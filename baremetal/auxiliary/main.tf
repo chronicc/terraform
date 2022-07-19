@@ -133,8 +133,11 @@ resource "kubernetes_storage_class" "local" {
 ## Persistent Volumes
 resource "kubernetes_persistent_volume" "local" {
   for_each = {
-    "1" = "100Gi"   # minio
-    "2" = "8Gi"     # backstage
+    "1" = "100Gi" # minio
+    "2" = "8Gi"   # backstage
+    "3" = "32Gi"  # grafana
+    "4" = "32Gi"  # prometheus server
+    "5" = "8Gi"   # prometheus alertmanager
   }
 
   metadata {

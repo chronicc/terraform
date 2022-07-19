@@ -172,6 +172,29 @@ module "gitlab_runner" {
 }
 
 
+## Grafana
+##
+module "helm_grafana" {
+  source = "../../modules/helm-grafana"
+
+  ingress_domain           = var.grafana_ingress_domain
+  persistence_storage_size = "32Gi"
+}
+
+resource "kubernetes_config_map" "grafana_dashboards" {
+  metadata {
+    name = "grafana-dashboards"
+    labels = {
+      "grafana_dashboard" = "1"
+    }
+  }
+
+  data = {
+    "kubernetes.json" = "${file("${path.module}/files/grafana_dashboard_kubernetes.json")}"
+  }
+}
+
+
 ## Minio
 ##
 module "minio" {
@@ -186,4 +209,14 @@ module "minio" {
   root_password   = var.minio_root_password
   storage_size    = var.minio_storage_size
   storage_volume  = var.minio_storage_volume
+}
+
+
+## Prometheus
+##
+module "helm_prometheus" {
+  source = "../../modules/helm-prometheus"
+
+  alertmanager_persistence_storage_size = "8Gi"
+  server_persistence_storage_size       = "32Gi"
 }
