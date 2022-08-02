@@ -1,3 +1,9 @@
+variable "alertmanager_persistence_storage_size" {
+  default     = "2Gi"
+  description = "Storage size of the persistent volume for the alert manager."
+  type        = string
+}
+
 variable "chart_name" {
   default     = "prometheus"
   description = "Name of the Helm chart that will be installed."
@@ -5,7 +11,7 @@ variable "chart_name" {
 }
 
 variable "chart_version" {
-  default = ""
+  default     = ""
   description = "Version of the Helm chart version. Note that this is not the appVersion."
   type        = string
 }
@@ -40,14 +46,14 @@ variable "namespace" {
   type        = string
 }
 
-variable "alertmanager_persistence_storage_size" {
-  default = "2Gi"
-  description = "Storage size of the persistent volume for the alert manager."
-  type = string
+variable "server_extra_scrape_configs" {
+  default     = ""
+  description = "Extra scrape configs that will be added to the prometheus server configuration."
+  type        = string
 }
 
 variable "server_persistence_storage_size" {
-  default = "8Gi"
+  default     = "8Gi"
   description = "Storage size of the persistent volume for the server."
-  type = string
+  type        = string
 }

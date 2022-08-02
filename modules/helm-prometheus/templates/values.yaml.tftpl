@@ -2,6 +2,8 @@ alertmanager:
   persistenVolume:
     size: ${alertmanager_persistence_storage_size}
 
+extraScrapeConfigs: ${yamlencode(server_extra_scrape_configs)}
+
 server:
   persistentVolume:
     size: ${server_persistence_storage_size}
