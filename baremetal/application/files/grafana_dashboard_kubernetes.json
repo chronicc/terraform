@@ -2485,7 +2485,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "Prometheus",
           "value": "Prometheus"
         },
@@ -2515,7 +2515,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "gj6_YhgVk"
+          "uid": "${datasource}"
         },
         "definition": "label_values(node_os_info, node)",
         "hide": 0,
@@ -2543,6 +2543,10 @@
           "value": [
             "$__all"
           ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
         },
         "definition": "label_values(kube_namespace_labels, namespace)",
         "hide": 0,
@@ -2595,6 +2599,6 @@
   "timezone": "browser",
   "title": "Kubernetes Cluster (Prometheus)",
   "uid": "4XuMd2Iiz",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
